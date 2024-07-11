@@ -98,27 +98,4 @@ public class RateCalculatorService : IRateCalculator
                date.DayOfWeek == DayOfWeek.Saturday ||
                date.DayOfWeek == DayOfWeek.Sunday;
     }
-
-    //public void LoadRatesData()
-    //{
-    //    try
-    //    {
-    //        string json = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Data", "rates.json"));
-    //        rates = JsonSerializer.Deserialize<List<Rate>>(json);
-
-    //        // Print the deserialized data for debugging
-    //        foreach (var rate in rates)
-    //        {
-    //            Console.WriteLine($"Rate ID: {rate.Id}, Name: {rate.Name}, TypeId: {rate.TypeId}, Note: {rate.Note}");
-    //            foreach (var price in rate.Prices)
-    //            {
-    //                Console.WriteLine($"  Price ID: {price.Id}, Value: {price.Value}, Note: {price.Note}");
-    //            }
-    //        }
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Console.WriteLine($"Error loading rates: {ex.Message}");
-    //    }
-    //}
 }
