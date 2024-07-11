@@ -31,40 +31,46 @@ The **AppHost** and **ServiceDefaults** projects are only used by Aspire.
 
 1.  **Clone the Repository**
 
-    ```
+```bash
     git clone <repository-url>
     cd <repository-directory>
-    ```
+```
 
 2.  **Configure Rate Data**
     The rate data is configured in rates.json located in the Infrastructure/Data directory. You can modify this file to change the rates used by the application.
 
 ### Running the Application
 
-**Visual Studio**: F5 should be enough as the AppHost is already setup as the start up project.
-**vscode**: F5 and make sure to configure C# as programming language and then use AppHost [Default Configuration] to start the application and UI.
+- **Visual Studio**: F5 should be enough as the AppHost is already setup as the start up project.
 
-Use the `webfrontend` project to [endpoint](https://localhost:7146/) to access the UI.
-(UI.jpg)
-Use the other features to enjoy everything the .Net Aspire has to offer.
-(Aspire.jpg)
+- **vscode**: F5 and make sure to configure C# as programming language and then use AppHost [Default Configuration] to start the application and UI.
+
+  Use the `webfrontend` project to [endpoint](https://localhost:7146/) to access the UI.
+
+![Calculate Rate UI](UI.jpg)
+
+    Use the other features to enjoy everything the .Net Aspire has to offer.
+
+![Aspire UI](Aspire.jpg)
 
 ### Running Tests
 
 To run the unit tests, navigate to the Tests project and execute:
 
+```bash
     dotnet test
+```
 
 ### Usage
 
 To calculate the rate for parking, create an instance of RateCalculatorService, and call the CalculateRate method with entry and exit timestamps.
 
-    ```bash
+```csharp
     var rateCalculatorService = new RateCalculatorService(ratesLoader);
     DateTime entry = new DateTime(2024, 7, 11, 10, 0, 0);
     DateTime exit = new DateTime(2024, 7, 11, 14, 0, 0);
     var result = rateCalculatorService.CalculateRate(entry, exit);
-    ```
+```
 
 ### Testing
 
@@ -72,7 +78,7 @@ The unit tests for `RateCalculatorService` ensure that the rate calculation logi
 
 ### Sample Test
 
-    ```bash
+```csharp
     [Fact]
     public void CalculateRate_ValidEarlyBirdRate_ReturnsExpectedRate()
     {
@@ -93,7 +99,7 @@ The unit tests for `RateCalculatorService` ensure that the rate calculation logi
         Assert.Equal("FlatRate", result.TypeName);
         Assert.Equal(15.0, result.TotalPrice);
     }
-    ```
+```
 
 ### License
 
