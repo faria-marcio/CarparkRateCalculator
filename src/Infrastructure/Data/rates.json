@@ -1,0 +1,79 @@
+[
+  {
+    "id": 1,
+    "name": "Early Bird",
+    "typeId": 1,
+    "prices": [
+      {
+        "id": 1,
+        "price": 13.00
+      }
+    ],
+    "entryCondition": "Enter between 6:00 AM to 9:00 AM",
+    "exitCondition": "Exit between 3:30 PM to 11:30 PM",
+    "note": ""
+  },
+  {
+    "id": 2,
+    "name": "Night Rate",
+    "typeId": 1,
+    "prices": [
+      {
+        "id": 1,
+        "price": 6.50
+      }
+    ],
+    "entryCondition": "Enter between 6:00 PM to midnight (weekdays)",
+    "exitCondition": "Exit before 6 AM the following day",
+    "note": ""
+  },
+  {
+    "id": 3,
+    "name": "Weekend Rate",
+    "typeId": 1,
+    "prices": [
+      {
+        "id": 1,
+        "price": 10.00
+      }
+    ],
+    "entryCondition": "Enter anytime past midnight on Friday to Sunday",
+    "exitCondition": "Exit any time before midnight of Sunday",
+    "note": "If a patron enters the car park before midnight on Friday and if they qualify for Night rate on a Saturday morning, then the program should charge the night rate instead of weekend rate"
+  },
+  {
+    "id": 4,
+    "name": "Standard Rate",
+    "typeId": 2,
+    "prices": [
+      {
+        "id": 1,
+        "price": 5.00,
+        "note": "0 – 1 hours"
+      },
+      {
+        "id": 2,
+        "price": 10.00,
+        "note": "1 – 2 hours"
+      },
+      {
+        "id": 3,
+        "price": 15.00,
+        "note": "2 – 3 hours"
+      },
+      {
+        "id": 4,
+        "price": 20.00,
+        "note": "3 + hours - flat rate for each calendar day of parking"
+      },
+      {
+        "id": 99,
+        "price": 0.00,
+        "note": "Not applicable (the entry date/time is likely later than the exit date/time)"
+      }
+    ],
+    "entryCondition": "",
+    "exitCondition": "",
+    "note": "For any other entry and exit times the program should refer the these hourly rates for calculating the total price."
+  }
+]

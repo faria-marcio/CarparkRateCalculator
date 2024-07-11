@@ -1,0 +1,66 @@
+﻿@page "/rate"
+@rendermode InteractiveServer
+@attribute [StreamRendering(true)]
+@attribute [OutputCache(Duration = 5)]
+
+@inject CalculateRateApiClient CalculateRateApi
+
+<PageTitle>Rate</PageTitle>
+
+<h1>Rate</h1>
+
+<p>Select the dates to get the rate details from the back-end API service.</p>
+
+<table class="table">
+    <tr>
+        <th><label for="entryDateTime">Entry Date and Time:</label></th>
+        <td><input type="datetime-local" id="entryDateTime" @bind="entryDateTime" /></td>
+    </tr>
+    <tr><td></td></tr>
+    <tr>
+        <th><label for="exitDateTime">Exit Date and Time:</label></th>
+        <td><input type="datetime-local" id="exitDateTime" @bind="exitDateTime" /></td>
+    </tr>
+</table>
+
+<button class="btn btn-primary" @onclick="CalculateRate">Calculate Rate</button>
+<p></p>
+
+@if (rate is not null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name of the Rate</th>
+                <th>Type</th>
+                <th>Total Price</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@rate.RateName</td>
+                <td>@rate.TypeName</td>
+                <td>@rate.TotalPrice.ToString("C", new System.Globalization.CultureInfo("en-AU"))</td>
+                <td>@rate.Note</td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@code {
+    private RateResponse? rate;
+    private DateTime entryDateTime;
+    private DateTime exitDateTime;
+
+    protected override async Task OnInitializedAsync()
+    {
+        entryDateTime = DateTime.Now;
+        exitDateTime = DateTime.Now;
+    }
+
+    private async Task CalculateRate()
+    {
+        rate = await CalculateRateApi.GetRateAsync(entryDateTime.ToString("yyyy-MM-dd HH:mm"), exitDateTime.ToString("yyyy-MM-dd HH:mm"));
+    }
+}
