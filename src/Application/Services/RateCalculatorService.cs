@@ -65,7 +65,7 @@ public class RateCalculatorService(IRatesLoader ratesLoader) : IRateCalculator
                exit.Date == entry.Date.AddDays(1);
     }
 
-    private bool IsWeekendRate(DateTime entry, DateTime exit)
+    private static bool IsWeekendRate(DateTime entry, DateTime exit)
     {
         return IsWeekend(entry) && IsWeekend(exit);
     }
