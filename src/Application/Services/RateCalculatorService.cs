@@ -3,23 +3,17 @@ using Domain.Entities;
 using Domain.Enums;
 using Domain.Interfaces;
 using Domain.ValueObjects;
-using System.Text.Json;
 
 namespace Application.Services;
 
-public class RateCalculatorService : IRateCalculator
+public class RateCalculatorService(IRatesLoader ratesLoader) : IRateCalculator
 {
-    private readonly IRatesLoader _ratesLoader;
-    private List<Rate> rates;
-
-    public RateCalculatorService(IRatesLoader ratesLoader)
-    {
-        _ratesLoader = ratesLoader;
-    }
+    private readonly IRatesLoader _ratesLoader = ratesLoader;
+    private List<Rate> _rates = [];
 
     public RateResponse CalculateRate(DateTime entry, DateTime exit)
     {
-        rates = _ratesLoader.LoadRatesData();
+        _rates = _ratesLoader.LoadRatesData();
 
         if (entry >= exit)
             return CalculateStandardRate(entry, exit);
@@ -38,7 +32,7 @@ public class RateCalculatorService : IRateCalculator
 
     private RateResponse GenerateResponse(Rates rateId = Rates.StandardRate, int priceId = 1, int days = 1)
     {
-        var rate = rates?.Find(r => r.Id == (int)rateId)
+        var rate = _rates?.Find(r => r.Id == (int)rateId)
             ?? throw new ArgumentException("Rate not found");
 
         var rateType = Enum.GetName(typeof(RateTypes), rate.TypeId)
@@ -52,7 +46,7 @@ public class RateCalculatorService : IRateCalculator
         return new RateResponse(rate.Name, rateType, totalPrice, note);
     }
 
-    private bool IsEarlyBird(DateTime entry, DateTime exit)
+    private static bool IsEarlyBird(DateTime entry, DateTime exit)
     {
         return entry.TimeOfDay >= new TimeSpan(6, 0, 0) &&
                entry.TimeOfDay <= new TimeSpan(9, 0, 0) &&
@@ -61,7 +55,7 @@ public class RateCalculatorService : IRateCalculator
                exit.Date == entry.Date;
     }
 
-    private bool IsNightRate(DateTime entry, DateTime exit)
+    private static bool IsNightRate(DateTime entry, DateTime exit)
     {
         return entry.DayOfWeek != DayOfWeek.Saturday &&
                entry.DayOfWeek != DayOfWeek.Sunday &&
@@ -92,7 +86,7 @@ public class RateCalculatorService : IRateCalculator
         return GenerateResponse(Rates.StandardRate, priceId, days);
     }
 
-    private bool IsWeekend(DateTime date)
+    private static bool IsWeekend(DateTime date)
     {
         return date.DayOfWeek == DayOfWeek.Friday ||
                date.DayOfWeek == DayOfWeek.Saturday ||

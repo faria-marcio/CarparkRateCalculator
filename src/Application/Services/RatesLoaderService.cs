@@ -2,9 +2,9 @@
 using Domain.Entities;
 using Domain.Interfaces;
 
-namespace Application.Interfaces;
+namespace Application.Services;
 
-public class JsonRatesLoader : IRatesLoader
+public class RatesLoaderService : IRatesLoader
 {
     public List<Rate> LoadRatesData()
     {

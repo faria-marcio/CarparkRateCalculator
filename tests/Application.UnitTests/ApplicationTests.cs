@@ -250,7 +250,7 @@ public class RateCalculatorServiceTests
         Assert.Equal(160.0, result.TotalPrice);
     }
 
-    private List<Rate> GetSampleRates()
+    private static List<Rate> GetSampleRates()
     {
         return
             [
